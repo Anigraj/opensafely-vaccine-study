@@ -1,0 +1,15 @@
+version: '3.0'
+
+actions:
+  generate_dataset:
+    run: cohortextractor:latest generate_cohort
+    outputs:
+      highly_sensitive:
+        cohort: output/input.csv
+
+  analysis:
+    run: python:latest python analysis.py
+    needs: [generate_dataset]
+    outputs:
+      moderately_sensitive:
+        result: output/result.csv
